@@ -1,4 +1,6 @@
 import React from "react";
+import "../App.css";
+import DataTable from "./DataTable";
 import {
   LineChart,
   Line,
@@ -26,7 +28,7 @@ const dataHandler = () => {
 };
 dataHandler();
 //make data ready for virtualization
-type MonthlyData = {
+export type MonthlyData = {
   key: string;
   month: string;
   temp: number;
@@ -108,14 +110,14 @@ for (let m of months) {
 
 function DataVirtual() {
   return (
-    <div>
+    <div className="component">
       <p>
         Monthly trends for temperaturen (Celsius degrees) and the burned area of
         the forest(in ha)
       </p>
       <LineChart
-        width={500}
-        height={300}
+        width={730}
+        height={250}
         data={dataforChart}
         margin={{
           top: 5,
@@ -214,6 +216,7 @@ function DataVirtual() {
         <Bar dataKey="area" barSize={20} fill="#413ea0" />
         <Line type="monotone" dataKey="temp" stroke="#ff7300" />
       </ComposedChart>
+      <DataTable data={dataforChart} />
     </div>
   );
 }

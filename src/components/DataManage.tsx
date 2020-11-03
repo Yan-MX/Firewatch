@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { DataObject } from "../App";
 
-//setData type? { setData }: { setData: DataObject }
-function DataManage() {
+interface Props {
+  setDatalist: any;
+}
+const DataManage: React.FC<Props> = ({ setDatalist }) => {
   let empty: DataObject = {
     X: NaN,
     Y: NaN,
@@ -34,7 +36,7 @@ function DataManage() {
     });
   };
   return (
-    <div>
+    <div className="component">
       <form onSubmit={submit}>
         <label>X</label>
         <input
@@ -168,6 +170,6 @@ function DataManage() {
       </form>
     </div>
   );
-}
+};
 
 export default DataManage;
