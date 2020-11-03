@@ -31,7 +31,7 @@ function App() {
       <h2>Data Virtualization</h2>
       <DataVirtual />
       <h2>Data Management</h2>
-      <DataManage setData={setData} />
+      <DataManage />
     </div>
   );
 }
