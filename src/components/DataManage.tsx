@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DataObject } from "../App";
 
-//setData type?{ setData }: { setData: DataObject }
+//setData type? { setData }: { setData: DataObject }
 function DataManage() {
   let empty: DataObject = {
     X: NaN,
@@ -19,13 +19,18 @@ function DataManage() {
     area: NaN,
   };
   const [form, setForm] = useState<DataObject>(empty);
-  const submit = () => {};
+  const submit = (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault();
+    console.log("submit form, please check");
+    console.log(form);
+  };
   const handleChange = (e: React.SyntheticEvent<EventTarget>): void => {
     e.preventDefault();
     const value = (e.target as HTMLInputElement).value;
+    console.log("attention " + value);
     setForm({
       ...form,
-      [(e.target as HTMLInputElement).name]: value,
+      [(e.target as HTMLInputElement).name]: value, // only keep two decimal!
     });
   };
   return (

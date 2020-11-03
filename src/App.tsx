@@ -21,7 +21,6 @@ export type DataObject = {
 
 function App() {
   const loadData = [...jsonData];
-  console.log(loadData[0]);
 
   const [datalist, setDatalist] = useState<DataObject[]>(loadData);
   const [data, setData] = useState<DataObject>();
