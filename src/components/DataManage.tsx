@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import { DataObject } from "../App";
+const JsonTable = require("ts-react-json-table");
 
 interface Props {
-  setDatalist: any;
+  datalist: DataObject[];
+  setDatalist: (dataObjects: DataObject[]) => void;
 }
-const DataManage: React.FC<Props> = ({ setDatalist }) => {
+const DataManage = ({ datalist, setDatalist }: Props) => {
   let empty: DataObject = {
-    X: NaN,
-    Y: NaN,
+    X: 1,
+    Y: 1,
     month: "jan",
     day: "mon",
-    FFMC: NaN,
-    DMC: NaN,
-    DC: NaN,
-    ISI: NaN,
-    temp: NaN,
-    RH: NaN,
-    wind: NaN,
-    rain: NaN,
-    area: NaN,
+    FFMC: 18.7,
+    DMC: 1.1,
+    DC: 7.9,
+    ISI: 0.0,
+    temp: 2.2,
+    RH: 15.0,
+    wind: 0.4,
+    rain: 0.0,
+    area: 0.0,
   };
   const [form, setForm] = useState<DataObject>(empty);
   const submit = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
     console.log("submit form, please check");
     console.log(form);
+    setDatalist([...datalist, form]);
+    setForm(empty);
   };
   const handleChange = (e: React.SyntheticEvent<EventTarget>): void => {
     e.preventDefault();
@@ -168,6 +172,12 @@ const DataManage: React.FC<Props> = ({ setDatalist }) => {
         <br />
         <input type="submit" value="Submit" />
       </form>
+      <p> ------------------------------ </p>
+      <p>Show the last 10 rows of data: </p>
+      <JsonTable
+        rows={datalist.slice(1).slice(-20)}
+        columns={["month", "day", "temp", "RH", "wind", "rain", "area"]}
+      />
     </div>
   );
 };

@@ -22,6 +22,7 @@ export type DataObject = {
 function App() {
   const loadData = [...jsonData];
 
+  // function setDatalist2(a:DataObject[]): void {}
   const [datalist, setDatalist] = useState<DataObject[]>(loadData);
   const [screen, setScreen] = useState<any>(0);
   const clickhandler = (event: any) => {
@@ -37,13 +38,18 @@ function App() {
     <div>
       <div className="header space">
         <h1 onClick={clickhandler0}>FireWatch</h1>
-        <a onClick={clickhandler}>Data Virtualization</a>
-
-        <a onClick={clickhandler2}>Data Management</a>
+        <button className="link-button" onClick={clickhandler}>
+          Data Virtualization
+        </button>
+        <button className="link-button" onClick={clickhandler2}>
+          Data Management
+        </button>
       </div>
       <div className="space readable">
         {screen === 1 && <DataVirtual />}
-        {screen === 2 && <DataManage setDatalist={setDatalist} />}
+        {screen === 2 && (
+          <DataManage datalist={datalist} setDatalist={setDatalist} />
+        )}
       </div>
     </div>
   );
