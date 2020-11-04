@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import jsonData from "./data/forestfires.json";
+import Firebasedata from "./components/firebase/Firebasedata";
 import "./App.css";
 import DataVirtual from "./components/DataVirtual";
 import DataManage from "./components/DataManage";
+import { AuthContext } from "./components/firebase/AuthContext";
+import useFirebaseAuth from "./components/firebase/useFirebaseAuth";
 export type DataObject = {
   X: number;
   Y: number;
@@ -21,7 +24,8 @@ export type DataObject = {
 
 function App() {
   const loadData = [...jsonData];
-
+  const authContext = useFirebaseAuth();
+  const datalist2 = Firebasedata();
   // function setDatalist2(a:DataObject[]): void {}
   const [datalist, setDatalist] = useState<DataObject[]>(loadData);
   const [screen, setScreen] = useState<any>(0);
