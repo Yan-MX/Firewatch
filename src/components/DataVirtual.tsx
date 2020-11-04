@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import DataTable from "./DataTable";
+import Drawlinechart from "./Drawlinechart";
+import Drawbarchart from "./Drawbarchart";
 import {
-  LineChart,
   Line,
   CartesianGrid,
   Tooltip,
@@ -19,9 +20,12 @@ import jsonData from "../data/forestfires.json";
 let Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 2vw;
+`;
+let H2 = styled.h2`
+  margin-top: 5vw;
 `;
 const loadData: DataObject[] = [...jsonData];
 export type DataObjectwithKey = DataObject & { key: number };
@@ -94,8 +98,6 @@ const dataEdit = (month: string) => {
     rain: rainAverage,
     area: areaAverage,
   });
-  console.log(dataforChart.length);
-  console.log(dataforChart[dataforChart.length - 1]);
 };
 const months = [
   "jan",
@@ -118,35 +120,11 @@ for (let m of months) {
 function DataVirtual() {
   return (
     <Wrapper>
-      <p>
-        Monthly trends for temperaturen (Celsius degrees) and the burned area of
-        the forest(in ha)
-      </p>
-      <LineChart
-        width={730}
-        height={250}
-        data={dataforChart}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="temp"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="area" stroke="#82ca9d" />
-      </LineChart>
-      <p> Monthly rain average (outside rain in mm/m2) </p>
+      <H2>Monthly Avearge (Linechart)</H2>
+      <Drawlinechart data={dataforChart} />
+      <H2>Monthly Avearge (Barchart)</H2>
+      <Drawbarchart data={dataforChart} />
+      <H2> Monthly rain average (outside rain in mm/m2) </H2>
       <AreaChart
         width={730}
         height={250}
@@ -172,7 +150,7 @@ function DataVirtual() {
           fill="url(#colorrain)"
         />
       </AreaChart>
-      <p>Monthly relative humidity in %</p>
+      <H2>Monthly relative humidity in %</H2>
       <AreaChart
         width={730}
         height={250}
@@ -198,21 +176,8 @@ function DataVirtual() {
           fill="url(#colorRH)"
         />
       </AreaChart>
-      <p>Monthly wind average (wind speed in km/h)</p>
-      <LineChart
-        width={730}
-        height={250}
-        data={dataforChart}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="wind" stroke="#6fdfee" />
-      </LineChart>
-      <p>Monthly average of wind, fire area and tempetura</p>
+
+      <H2>Monthly average of wind, fire area and tempetura</H2>
       <ComposedChart width={730} height={250} data={dataforChart}>
         <XAxis dataKey="name" />
         <YAxis />
@@ -223,6 +188,7 @@ function DataVirtual() {
         <Bar dataKey="area" barSize={20} fill="#413ea0" />
         <Line type="monotone" dataKey="temp" stroke="#ff7300" />
       </ComposedChart>
+      <H2>Monthly Average Data Table</H2>
       <DataTable data={dataforChart} />
     </Wrapper>
   );

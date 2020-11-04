@@ -4,6 +4,8 @@ interface Props {
   data: MonthlyData[];
 }
 const DataTable: React.FC<Props> = ({ data }) => {
+  // a table with monthly average
+
   return (
     <table>
       <thead>
