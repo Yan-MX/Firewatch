@@ -1,7 +1,38 @@
 import React, { useState } from "react";
 import { DataObject } from "../App";
+import styled from "@emotion/styled";
 const JsonTable = require("ts-react-json-table");
-
+let Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+let Label = styled.label`
+  margin: 1vw 1vw;
+`;
+let P = styled.p`
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.8vw;
+`;
+let Input = styled.input`
+  margin: 1vw 0;
+  border-radius: 5px;
+`;
+let Input2 = styled.input`
+  margin: 1vw 3vw;
+  border-radius: 5px;
+  width: 5vw;
+  cursor: pointer;
+`;
+let Form = styled.form`
+  margin: 3vw 0;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 #c6eff0;
+  padding-top: 3vw;
+  width: 80%;
+`;
 interface Props {
   datalist: DataObject[];
   setDatalist: (dataObjects: DataObject[]) => void;
@@ -40,25 +71,26 @@ const DataManage = ({ datalist, setDatalist }: Props) => {
     });
   };
   return (
-    <div className="component">
-      <form onSubmit={submit}>
-        <label>X</label>
-        <input
+    <Wrapper>
+      <Form onSubmit={submit}>
+        <P> Add new data</P>
+        <Label>X</Label>
+        <Input
           type="number"
           name="X"
           value={form.X}
           onChange={handleChange}
           required
         />
-        <label>Y</label>
-        <input
+        <Label>Y</Label>
+        <Input
           type="number"
           name="Y"
           value={form.Y}
           onChange={handleChange}
           required
         />
-        <label>Month</label>
+        <Label>Month</Label>
         <select
           name="month"
           id="day"
@@ -79,7 +111,7 @@ const DataManage = ({ datalist, setDatalist }: Props) => {
           <option value="nov">November</option>
           <option value="dec">December</option>
         </select>
-        <label>Day</label>
+        <Label>Day</Label>
         <select
           name="day"
           id="day"
@@ -96,73 +128,74 @@ const DataManage = ({ datalist, setDatalist }: Props) => {
           <option value="sun">Sunday</option>
         </select>
         <br />
-        <label>FFMC</label>
-        <input
+        <Label>FFMC</Label>
+        <Input
           type="number"
           name="FFMC"
           value={form.FFMC}
           onChange={handleChange}
           required
         />
-        <label>DMC</label>
-        <input
+        <Label>DMC</Label>
+        <Input
           type="number"
           name="DMC"
           value={form.DMC}
           onChange={handleChange}
           required
         />
-        <label>DC</label>
-        <input
+        <Label>DC</Label>
+        <Input
           type="number"
           name="DC"
           value={form.DC}
           onChange={handleChange}
           required
         />
-        <label>ISI</label>
-        <input
+        <br />
+        <Label>ISI</Label>
+        <Input
           type="number"
           name="ISI"
           value={form.ISI}
           onChange={handleChange}
           required
         />
-        <br />
-        <label>temp</label>
-        <input
+        <Label>temp</Label>
+        <Input
           type="number"
           name="temp"
           value={form.temp}
           onChange={handleChange}
           required
         />
-        <label>RH</label>
-        <input
+        <Label>RH</Label>
+        <Input
           type="number"
           name="RH"
           value={form.RH}
           onChange={handleChange}
           required
         />
-        <label>wind</label>
-        <input
+        <br />
+        <Label>wind</Label>
+        <Input
           type="number"
           name="wind"
           value={form.wind}
           onChange={handleChange}
           required
         />
-        <label>rain</label>
-        <input
+        <Label>rain</Label>
+        <Input
           type="number"
           name="rain"
           value={form.rain}
           onChange={handleChange}
           required
         />
-        <label>area</label>
-        <input
+        <Label>area</Label>
+        <Input
           type="number"
           name="area"
           value={form.area}
@@ -170,15 +203,29 @@ const DataManage = ({ datalist, setDatalist }: Props) => {
           required
         />
         <br />
-        <input type="submit" value="Submit" />
-      </form>
+        <Input2 type="submit" value="Submit" />
+      </Form>
       <p> ------------------------------ </p>
-      <p>Show the last 10 rows of data: </p>
-      <JsonTable
-        rows={datalist.slice(1).slice(-20)}
-        columns={["month", "day", "temp", "RH", "wind", "rain", "area"]}
-      />
-    </div>
+      <P>Show the last 20 rows of data: </P>
+      <Form>
+        <JsonTable
+          rows={datalist.slice(1).slice(-20)}
+          columns={[
+            "month",
+            "day",
+            "temp",
+            "FFMC",
+            "DMC",
+            "DC",
+            "ISI",
+            "RH",
+            "wind",
+            "rain",
+            "area",
+          ]}
+        />
+      </Form>
+    </Wrapper>
   );
 };
 

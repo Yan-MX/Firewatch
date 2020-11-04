@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import styled from "@emotion/styled";
 import DataTable from "./DataTable";
 import {
   LineChart,
@@ -16,6 +16,13 @@ import {
 } from "recharts";
 import { DataObject } from "../App";
 import jsonData from "../data/forestfires.json";
+let Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+`;
 const loadData: DataObject[] = [...jsonData];
 export type DataObjectwithKey = DataObject & { key: number };
 let loadDatawithKey: DataObjectwithKey[];
@@ -110,7 +117,7 @@ for (let m of months) {
 
 function DataVirtual() {
   return (
-    <div className="component">
+    <Wrapper>
       <p>
         Monthly trends for temperaturen (Celsius degrees) and the burned area of
         the forest(in ha)
@@ -217,7 +224,7 @@ function DataVirtual() {
         <Line type="monotone" dataKey="temp" stroke="#ff7300" />
       </ComposedChart>
       <DataTable data={dataforChart} />
-    </div>
+    </Wrapper>
   );
 }
 
