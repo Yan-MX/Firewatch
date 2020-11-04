@@ -4,6 +4,7 @@ import Firebasedata from "./components/firebase/Firebasedata";
 import "./App.css";
 import DataVirtual from "./components/DataVirtual";
 import DataManage from "./components/DataManage";
+import { addData } from "./components/firebase/DataService";
 import { AuthContext } from "./components/firebase/AuthContext";
 import useFirebaseAuth from "./components/firebase/useFirebaseAuth";
 export type DataObject = {
@@ -26,6 +27,13 @@ function App() {
   const loadData = [...jsonData];
   const authContext = useFirebaseAuth();
   const datalist2 = Firebasedata();
+  // const addtoFire = () => {
+  //   loadData.map((x) => {
+  //     addData(x);
+  //   });
+  //   console.log("attention ok");
+  // };
+  // addtoFire();
   // function setDatalist2(a:DataObject[]): void {}
   const [datalist, setDatalist] = useState<DataObject[]>(loadData);
   const [screen, setScreen] = useState<any>(0);
@@ -71,6 +79,18 @@ function App() {
           <DataManage datalist={datalist} setDatalist={setDatalist} />
         )}
       </div>
+      <AuthContext.Provider value={authContext}>
+        <div className="space readable">
+          {authContext.isLoggedIn ? authContext.user?.displayName : "Welcome!"}
+        </div>
+        <div className="space readable">
+          {authContext.isLoggedIn && (
+            <button color="inherit" onClick={authContext.logout}>
+              Logout
+            </button>
+          )}
+        </div>
+      </AuthContext.Provider>
     </div>
   );
 }
