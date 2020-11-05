@@ -17,19 +17,24 @@ This website offers tools to generate data virtulization of forest temperate, ra
 
 Users can click on 3 different sections on the top right, namely DataVirtual, DataManage and DataExport.
 
-##### 🔸In DataVirtual section, users can use the charts and customrize a chart by select a factor and click generate button.
+##### 🔸In DataVirtual section,
+users can use the charts and customize a chart by select a factor and click generate button.
 
-##### 🔸In DataManage secion, user can fill in information and add new data to the database
+##### 🔸In DataManage secion,
+user can fill in information and add new data to the database
 
-##### 🔸In DataExport section, user can check how many rows of data we have and export data to a csv file.
+##### 🔸In DataExport section,
+user can check how many rows of data we have and export data to a csv file.
 
 
 
 ## Technologies used
-
-Typescript:
-Firebase:
-
+##### React: 
+React also allows us to create reusable UI components. React allows developers to create large web applications that can change data, without reloading the page. The main purpose of React is to be fast, scalable, and simple.
+##### Typescript:
+TypeScript gives us all the benefits of ES6 (ECMAScript 6), plus more productivity. TypeScript can help us to avoid painful bugs that developers commonly run into when writing JavaScript by type checking the code. TypeScript simplifies JavaScript code, making it easier to read and debug.
+##### Firebase (FireStore): 
+The Firebase Database lets us build rich, collaborative applications. Cloud Firestore is a cloud-hosted, NoSQL database that our iOS, Android, and web apps can access directly via native SDKs. Firestore is Firebase's newest database for mobile app development. It builds on the successes of the Realtime Database with a new, more intuitive data model.
 ## Development Process
 
 ##### Day 1
