@@ -28,6 +28,10 @@ h1 {
 .readable {
   background-color: rgba(255, 255, 255, 0.8);
 }
+.greeting {
+  font-size: 1.5vw;
+  margin: 8vw 0;
+}
 .component {
   display: flex;
   flex-direction: column;

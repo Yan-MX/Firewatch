@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from "react";
-import jsonData from "./data/forestfires_small.json";
-import Firebasedata from "./components/firebase/Firebasedata";
+import React, { useState } from "react";
 import "./App.css";
 import DataVirtual from "./components/DataVirtual";
 import DataManage from "./components/DataManage";
 import DataExport from "./components/DataExport";
-import {
-  addCountFile,
-  setCountInCountFile,
-  addData,
-  getDataCount,
-  useAllDataFromFB,
-} from "./components/firebase/DataService";
-import { AuthContext } from "./components/firebase/AuthContext";
-import useFirebaseAuth from "./components/firebase/useFirebaseAuth";
+//import { addData, useAllDataFromFB } from "./components/firebase/DataService";
+//import jsonData from "./data/forestfires.json";
 
 export type DataObject = {
   X: number;
@@ -32,36 +23,16 @@ export type DataObject = {
 };
 
 function App() {
-  const loadedData = useAllDataFromFB();
-  const authContext = useFirebaseAuth();
-
-  // addtoFire();
-  // function setDatalist2(a:DataObject[]): void {}
-  const [datalist, setDatalist] = useState<DataObject[]>([]);
   const [screen, setScreen] = useState<any>(0);
-  const [dataCount, setDataCount] = useState<number>(0);
-  /*
-  const addInitialDataToFirebase = () => {
-    addCountFile();
-    loadData.map((x) => {
-      addData({ dataCount, setDataCount }, x);
-    });
-    setCountInCountFile(loadData.length);
-    console.log("Data added. Row count: ", loadData.length);
-  };
 
-  useEffect(() => {
-    getDataCount({ dataCount, setDataCount });
-    console.log("currentDataCountInFirebase: ", dataCount);
-    if (dataCount === 0) {
-      addInitialDataToFirebase();
-    } else {
-      console.log(
-        "Already has data in collection. Current data count: ",
-        dataCount
-      );
-    }
-  }, []);*/
+  //this method is only used once when first import data to database
+  // const initial = () => {
+  //   const loadData: DataObject[] = [...jsonData];
+  //   loadData.map((x) => {
+  //     addData(x);
+  //     console.log("attention initial");
+  //   });
+  // };
 
   //change pages
   const clickhandler = (event: any) => {
@@ -93,16 +64,20 @@ function App() {
       </div>
 
       {/* conditional rendering */}
-      <div className="space readable">
-        {screen === 1 && <DataVirtual currentDataList={datalist} />}
-        {screen === 2 && (
-          <DataManage
-            loadedData={loadedData}
-            datalist={datalist}
-            setDatalist={setDatalist}
-          />
+      <div className="space">
+        {screen === 0 && (
+          <div>
+            {/* this button should only be clicked once when we first import data from Json file to Firebase */}
+            {/* <button onClick={initial}>Add initial</button> */}
+            <h2 className="greeting"> Hi, Welcome to FireWatch.</h2>
+          </div>
         )}
-        {screen === 3 && <DataExport currentDataList={datalist} />}
+      </div>
+
+      <div className="space readable">
+        {screen === 1 && <DataVirtual />}
+        {screen === 2 && <DataManage />}
+        {screen === 3 && <DataExport />}
       </div>
     </div>
   );

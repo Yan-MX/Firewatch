@@ -1,8 +1,10 @@
+//this DataVirtual component edit and process data and pass inn data to children component (they are in datavirtualComponents folder) to make charts, this component itself also render some charts as well.
 import React from "react";
 import styled from "@emotion/styled";
-import DataTable from "./DataTable";
-import Drawlinechart from "./Drawlinechart";
-import Drawbarchart from "./Drawbarchart";
+import DataTable from "./datavirtualComponents/DataTable";
+import Drawlinechart from "./datavirtualComponents/Drawlinechart";
+import Drawbarchart from "./datavirtualComponents/Drawbarchart";
+import { useAllDataFromFB } from "./firebase/DataService";
 import {
   Line,
   CartesianGrid,
@@ -16,7 +18,20 @@ import {
   Bar,
 } from "recharts";
 import { DataObject } from "../App";
-import jsonData from "../data/forestfires.json";
+
+//define some types & interface
+export type MonthlyData = {
+  key: string;
+  month: string;
+  temp: number;
+  RH: number;
+  wind: number;
+  rain: number;
+  area: number;
+};
+type DataObjectwithKey = DataObject & { key: number };
+
+//styling
 let Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,108 +42,98 @@ let Wrapper = styled.div`
 let H2 = styled.h2`
   margin-top: 5vw;
 `;
-const loadData: DataObject[] = [...jsonData];
-export type DataObjectwithKey = DataObject & { key: number };
-let loadDatawithKey: DataObjectwithKey[];
 
-// add a key to each data
-const dataHandler = () => {
-  let num: number = 0;
-  loadDatawithKey = loadData.map((data) => {
-    return { ...data, key: num++ };
-  });
-};
-dataHandler();
+function DataVirtual() {
+  let loadDatawithKey: DataObjectwithKey[];
+  const currentDataList = useAllDataFromFB();
+  // add a key to each data
+  const dataHandler = () => {
+    let num: number = 0;
+    loadDatawithKey = currentDataList.map((data) => {
+      return { ...data, key: num++ };
+    });
+  };
+  dataHandler();
 
-//make data ready for virtualization
-export type MonthlyData = {
-  key: string;
-  month: string;
-  temp: number;
-  RH: number;
-  wind: number;
-  rain: number;
-  area: number;
-};
-let dataforChart: MonthlyData[] = [];
-const dataEdit = (month: string) => {
-  let dataholder: DataObjectwithKey[] = loadDatawithKey.filter(
-    (x) => x.month === month
-  );
+  //make data ready for virtualization
+  let dataforChart: MonthlyData[] = [];
+  //this method calculate mean of each factors in each month and add it to an array 'dataforChart'
+  const dataEdit = (month: string) => {
+    let dataholder: DataObjectwithKey[] = loadDatawithKey.filter(
+      (x) => x.month === month
+    );
 
-  let tempAverage: number = parseFloat(
-    (
-      dataholder.reduce(function (accumulator, current) {
-        return accumulator + current.temp;
-      }, 0) / dataholder.length
-    ).toFixed(2)
-  );
-  let RHAverage: number = parseFloat(
-    (
-      dataholder.reduce(function (accumulator, current) {
-        return accumulator + current.RH;
-      }, 0) / dataholder.length
-    ).toFixed(2)
-  );
-  let windAverage: number = parseFloat(
-    (
-      dataholder.reduce(function (accumulator, current) {
-        return accumulator + current.wind;
-      }, 0) / dataholder.length
-    ).toFixed(2)
-  );
-  let rainAverage: number = parseFloat(
-    (
-      dataholder.reduce(function (accumulator, current) {
-        return accumulator + current.rain;
-      }, 0) / dataholder.length
-    ).toFixed(2)
-  );
-  let areaAverage: number = parseFloat(
-    (
-      dataholder.reduce(function (accumulator, current) {
-        return accumulator + current.area;
-      }, 0) / dataholder.length
-    ).toFixed(2)
-  );
-  dataforChart.push({
-    key: month,
-    month: month,
-    temp: tempAverage,
-    RH: RHAverage,
-    wind: windAverage,
-    rain: rainAverage,
-    area: areaAverage,
-  });
-};
-const months = [
-  "jan",
-  "feb",
-  "mar",
-  "apr",
-  "may",
-  "jun",
-  "jul",
-  "aug",
-  "sep",
-  "oct",
-  "nov",
-  "dec",
-];
-for (let m of months) {
-  dataEdit(m);
-}
-
-interface Props {
-  currentDataList: DataObject[];
-}
-function DataVirtual({ currentDataList }: Props) {
+    let tempAverage: number = parseFloat(
+      (
+        dataholder.reduce(function (accumulator, current) {
+          return accumulator + current.temp;
+        }, 0) / dataholder.length
+      ).toFixed(2)
+    );
+    let RHAverage: number = parseFloat(
+      (
+        dataholder.reduce(function (accumulator, current) {
+          return accumulator + current.RH;
+        }, 0) / dataholder.length
+      ).toFixed(2)
+    );
+    let windAverage: number = parseFloat(
+      (
+        dataholder.reduce(function (accumulator, current) {
+          return accumulator + current.wind;
+        }, 0) / dataholder.length
+      ).toFixed(2)
+    );
+    let rainAverage: number = parseFloat(
+      (
+        dataholder.reduce(function (accumulator, current) {
+          return accumulator + current.rain;
+        }, 0) / dataholder.length
+      ).toFixed(2)
+    );
+    let areaAverage: number = parseFloat(
+      (
+        dataholder.reduce(function (accumulator, current) {
+          return accumulator + current.area;
+        }, 0) / dataholder.length
+      ).toFixed(2)
+    );
+    dataforChart.push({
+      key: month,
+      month: month,
+      temp: tempAverage,
+      RH: RHAverage,
+      wind: windAverage,
+      rain: rainAverage,
+      area: areaAverage,
+    });
+  };
+  const months = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+  //for loop each month, calculate data mean
+  for (let m of months) {
+    dataEdit(m);
+  }
   return (
     <Wrapper>
+      {/* chart that can be customized */}
       <H2>Monthly Avearge (Linechart)</H2>
       <Drawlinechart data={dataforChart} />
       <H2>Monthly Avearge (Barchart)</H2>
       <Drawbarchart data={dataforChart} />
+      {/* some other charts */}
       <H2> Monthly rain average (outside rain in mm/m2) </H2>
       <AreaChart
         width={730}

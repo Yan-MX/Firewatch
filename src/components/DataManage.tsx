@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+//this component is responsible for add new data to the database
+//use can file in data in the form and submit the new data, then it will add the new data into the firebase
+import React, { useState } from "react";
 import { DataObject } from "../App";
 import styled from "@emotion/styled";
-import {
-  addCountFile,
-  setCountInCountFile,
-  addData,
-  getDataCount,
-} from "./firebase/DataService";
-const JsonTable = require("ts-react-json-table");
+import { addData } from "./firebase/DataService";
+import { useAllDataFromFB } from "./firebase/DataService";
 
 //styling
 let Wrapper = styled.div`
@@ -41,12 +38,9 @@ let Form = styled.form`
   padding-top: 3vw;
   width: 80%;
 `;
-interface Props {
-  loadedData: DataObject[];
-  datalist: DataObject[];
-  setDatalist: (dl: DataObject[]) => void;
-}
-const DataManage = ({ loadedData, datalist, setDatalist }: Props) => {
+
+const DataManage = () => {
+  const currentDataList = useAllDataFromFB();
   //set initial value to the minimum value of factors
   let empty: DataObject = {
     X: 1,
@@ -64,22 +58,19 @@ const DataManage = ({ loadedData, datalist, setDatalist }: Props) => {
     area: 0.0,
   };
   const [form, setForm] = useState<DataObject>(empty);
-  useEffect(() => {
-    setDatalist(loadedData);
-  }, []);
+
   const submit = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
     addData(form);
-    setDatalist([...datalist, form]);
+
     setForm(empty);
   };
   const handleChange = (e: React.SyntheticEvent<EventTarget>): void => {
     e.preventDefault();
     const value = (e.target as HTMLInputElement).value;
-    console.log("attention " + value);
     setForm({
       ...form,
-      [(e.target as HTMLInputElement).name]: value, // only keep two decimal!
+      [(e.target as HTMLInputElement).name]: value,
     });
   };
   return (
@@ -216,26 +207,6 @@ const DataManage = ({ loadedData, datalist, setDatalist }: Props) => {
         />
         <br />
         <Input2 type="submit" value="Submit" />
-      </Form>
-      <p> ------------------------------ </p>
-      <P>Show the last 20 rows of data: </P>
-      <Form>
-        <JsonTable
-          rows={datalist}
-          columns={[
-            "month",
-            "day",
-            "temp",
-            "FFMC",
-            "DMC",
-            "DC",
-            "ISI",
-            "RH",
-            "wind",
-            "rain",
-            "area",
-          ]}
-        />
       </Form>
     </Wrapper>
   );

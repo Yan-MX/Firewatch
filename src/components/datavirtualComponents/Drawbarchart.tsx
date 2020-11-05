@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MonthlyData } from "./DataVirtual";
+import { MonthlyData } from "../DataVirtual";
 import styled from "@emotion/styled";
 import {
   BarChart,

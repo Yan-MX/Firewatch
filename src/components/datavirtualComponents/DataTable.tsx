@@ -1,5 +1,5 @@
 import React from "react";
-import { MonthlyData } from "./DataVirtual";
+import { MonthlyData } from "../DataVirtual";
 interface Props {
   data: MonthlyData[];
 }
