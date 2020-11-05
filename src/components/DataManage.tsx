@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataObject } from "../App";
 import styled from "@emotion/styled";
+import {
+  addCountFile,
+  setCountInCountFile,
+  addData,
+  getDataCount,
+} from "./firebase/DataService";
 const JsonTable = require("ts-react-json-table");
+
+//styling
 let Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,10 +42,12 @@ let Form = styled.form`
   width: 80%;
 `;
 interface Props {
+  loadedData: DataObject[];
   datalist: DataObject[];
-  setDatalist: (dataObjects: DataObject[]) => void;
+  setDatalist: (dl: DataObject[]) => void;
 }
-const DataManage = ({ datalist, setDatalist }: Props) => {
+const DataManage = ({ loadedData, datalist, setDatalist }: Props) => {
+  //set initial value to the minimum value of factors
   let empty: DataObject = {
     X: 1,
     Y: 1,
@@ -54,10 +64,12 @@ const DataManage = ({ datalist, setDatalist }: Props) => {
     area: 0.0,
   };
   const [form, setForm] = useState<DataObject>(empty);
+  useEffect(() => {
+    setDatalist(loadedData);
+  }, []);
   const submit = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
-    console.log("submit form, please check");
-    console.log(form);
+    addData(form);
     setDatalist([...datalist, form]);
     setForm(empty);
   };
@@ -209,7 +221,7 @@ const DataManage = ({ datalist, setDatalist }: Props) => {
       <P>Show the last 20 rows of data: </P>
       <Form>
         <JsonTable
-          rows={datalist.slice(1).slice(-20)}
+          rows={datalist}
           columns={[
             "month",
             "day",

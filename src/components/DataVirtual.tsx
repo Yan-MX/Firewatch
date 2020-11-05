@@ -30,6 +30,7 @@ let H2 = styled.h2`
 const loadData: DataObject[] = [...jsonData];
 export type DataObjectwithKey = DataObject & { key: number };
 let loadDatawithKey: DataObjectwithKey[];
+
 // add a key to each data
 const dataHandler = () => {
   let num: number = 0;
@@ -38,6 +39,7 @@ const dataHandler = () => {
   });
 };
 dataHandler();
+
 //make data ready for virtualization
 export type MonthlyData = {
   key: string;
@@ -117,7 +119,10 @@ for (let m of months) {
   dataEdit(m);
 }
 
-function DataVirtual() {
+interface Props {
+  currentDataList: DataObject[];
+}
+function DataVirtual({ currentDataList }: Props) {
   return (
     <Wrapper>
       <H2>Monthly Avearge (Linechart)</H2>

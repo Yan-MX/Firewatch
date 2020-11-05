@@ -1,12 +1,20 @@
-import React, { useState } from "react";
-import jsonData from "./data/forestfires.json";
+import React, { useState, useEffect } from "react";
+import jsonData from "./data/forestfires_small.json";
 import Firebasedata from "./components/firebase/Firebasedata";
 import "./App.css";
 import DataVirtual from "./components/DataVirtual";
 import DataManage from "./components/DataManage";
-import { addData } from "./components/firebase/DataService";
+import DataExport from "./components/DataExport";
+import {
+  addCountFile,
+  setCountInCountFile,
+  addData,
+  getDataCount,
+  useAllDataFromFB,
+} from "./components/firebase/DataService";
 import { AuthContext } from "./components/firebase/AuthContext";
 import useFirebaseAuth from "./components/firebase/useFirebaseAuth";
+
 export type DataObject = {
   X: number;
   Y: number;
@@ -24,19 +32,37 @@ export type DataObject = {
 };
 
 function App() {
-  const loadData = [...jsonData];
+  const loadedData = useAllDataFromFB();
   const authContext = useFirebaseAuth();
-  const datalist2 = Firebasedata();
-  // const addtoFire = () => {
-  //   loadData.map((x) => {
-  //     addData(x);
-  //   });
-  //   console.log("attention ok");
-  // };
+
   // addtoFire();
   // function setDatalist2(a:DataObject[]): void {}
-  const [datalist, setDatalist] = useState<DataObject[]>(loadData);
+  const [datalist, setDatalist] = useState<DataObject[]>([]);
   const [screen, setScreen] = useState<any>(0);
+  const [dataCount, setDataCount] = useState<number>(0);
+  /*
+  const addInitialDataToFirebase = () => {
+    addCountFile();
+    loadData.map((x) => {
+      addData({ dataCount, setDataCount }, x);
+    });
+    setCountInCountFile(loadData.length);
+    console.log("Data added. Row count: ", loadData.length);
+  };
+
+  useEffect(() => {
+    getDataCount({ dataCount, setDataCount });
+    console.log("currentDataCountInFirebase: ", dataCount);
+    if (dataCount === 0) {
+      addInitialDataToFirebase();
+    } else {
+      console.log(
+        "Already has data in collection. Current data count: ",
+        dataCount
+      );
+    }
+  }, []);*/
+
   //change pages
   const clickhandler = (event: any) => {
     setScreen(1);
@@ -47,17 +73,10 @@ function App() {
   const clickhandler2 = (event: any) => {
     setScreen(2);
   };
-  //try to export a json file
   const clickhandler3 = (event: any) => {
-    let file = JSON.stringify(datalist, null, 2);
-    console.log("attention here");
-    console.log(file);
-    const fs: any = require("fs");
-    fs.writeFile("forestfires.json", file, function (err: any) {
-      if (err) throw err;
-      console.log("complete");
-    });
+    setScreen(3);
   };
+
   return (
     <div>
       <div className="header space">
@@ -69,28 +88,22 @@ function App() {
           Data Management
         </button>
         <button className="link-button" onClick={clickhandler3}>
-          Export JSON
+          Export Data
         </button>
       </div>
+
       {/* conditional rendering */}
       <div className="space readable">
-        {screen === 1 && <DataVirtual />}
+        {screen === 1 && <DataVirtual currentDataList={datalist} />}
         {screen === 2 && (
-          <DataManage datalist={datalist} setDatalist={setDatalist} />
+          <DataManage
+            loadedData={loadedData}
+            datalist={datalist}
+            setDatalist={setDatalist}
+          />
         )}
+        {screen === 3 && <DataExport currentDataList={datalist} />}
       </div>
-      <AuthContext.Provider value={authContext}>
-        <div className="space readable">
-          {authContext.isLoggedIn ? authContext.user?.displayName : "Welcome!"}
-        </div>
-        <div className="space readable">
-          {authContext.isLoggedIn && (
-            <button color="inherit" onClick={authContext.logout}>
-              Logout
-            </button>
-          )}
-        </div>
-      </AuthContext.Provider>
     </div>
   );
 }
