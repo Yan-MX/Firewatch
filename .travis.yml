@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- '12'
+script:
+- npm test
+- npm run build
+deploy:
+  provider: heroku
+  app: firewatch
+  api_key:
+    secure: Iive6ktlJRlU+FotIJu5p9GWb7rIhdQmVDHZxqGPGk6ncFDOFE0TZMvSYrU+7ooulRnpFb69+UGIfmnLkU8bxRT+GbJIYfAemOimtTnouY+nbKOJTtIriUYKxe0vzdtv+unviIwK6B86RMbjfBzrx4Dw1MF0DLgJPWIfm+egArUlyfkwE8VG88wqqFY2eT2US6aoQdPkZAK4L/ffjLuAM+3hMlNsjzgUSaheyEYgX5NfvkjFHIzPCyak3Lmeujxzpn5UjiVwyoZF/ZGAuh34BFQjBgG6XnHwQyrB6BMLyXbteMm7Nzevxps2Iw7jqHbhU+NQomrU+WuA7+OOjYc/MxS+/D5ujmiJ203GK/7YTMI2VQu5TEERekksWyBx04ummWF3mq0ayl0IcXEN92UbtXggPiTZRHPBBa4QvFpEnY9tx1rlZI0oi07NAKQrMLiqEKI6zPYgcCRxhNKz0sAFLzuN/8v4DrPgrIEIwDYiiDDJbU9V29OjoBnMIWT5m8atMezqtWCh0QIJ5oE4jcRx5feUIWsUnWRKuNUQkGtqJVAajsZDDL/3XSXBISm4ifcYvT55EAihHT2HjoHYgUl9Xq1B9CvpcBYZNNjFjl7W04RWZnJkqiKGonQ2LcDfxHiA5cIMVztZiIQwfwLbbND0EcUOmbUCqCAYBXRC9eH6CSA=
