@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { DataObject } from "../App";
 import styled from "@emotion/styled";
 import { addData } from "./firebase/DataService";
-import { useAllDataFromFB } from "./firebase/DataService";
 
 //styling
 let Wrapper = styled.div`
@@ -40,7 +39,6 @@ let Form = styled.form`
 `;
 
 const DataManage = () => {
-  const currentDataList = useAllDataFromFB();
   //set initial value to the minimum value of factors
   let empty: DataObject = {
     X: 1,
