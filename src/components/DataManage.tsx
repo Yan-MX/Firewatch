@@ -1,9 +1,9 @@
 //this component is responsible for add new data to the database
 //use can file in data in the form and submit the new data, then it will add the new data into the firebase
 import React, { useState } from "react";
-import { DataObject } from "../App";
+import { DataObject } from "../types";
 import styled from "@emotion/styled";
-import { addData } from "./firebase/DataService";
+import { addData } from "../firebase/DataService";
 
 //styling
 let Wrapper = styled.div`

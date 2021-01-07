@@ -1,8 +1,8 @@
 //this component is responsible for export data in a CSV format
 import React, { ReactElement } from "react";
 import { CSVLink } from "react-csv";
-import { DataObject } from "../App";
-import { useAllDataFromFB } from "./firebase/DataService";
+import { DataObject } from "../types";
+import { useAllDataFromFB } from "../firebase/DataService";
 
 export default function DataExport(): ReactElement {
   const currentDataList: DataObject[] = useAllDataFromFB();

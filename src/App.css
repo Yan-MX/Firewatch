@@ -16,7 +16,7 @@ body {
 }
 .header {
   display: grid;
-  grid-template-columns: 55% 15% 15% 15%;
+  grid-template-columns: 20% 50% 10% 10% 10%;
 }
 .space {
   margin: 2vw 10vw;
