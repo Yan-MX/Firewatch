@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
-import firebase from 'firebase';
+import { useEffect, useState, useCallback } from "react";
+import firebase from "firebase";
 
-import { AuthContextType, initialAuthContext } from './AuthContext';
+import { AuthContextType, initialAuthContext } from "./AuthContext";
 
 function useFirebaseAuth() {
   const [authContext, setAuthContext] = useState<AuthContextType>(
@@ -22,7 +22,7 @@ function useFirebaseAuth() {
         await user.updateProfile({
           displayName: username,
         });
-        console.log('Logged in with: ' + user.displayName);
+        console.log("Logged in with: " + user.displayName);
       }
 
       setAuthContext((state) =>
@@ -32,7 +32,7 @@ function useFirebaseAuth() {
         })
       );
     } catch (error) {
-      console.error('Login error: ', error);
+      console.error("Login error: ", error);
       throw error;
     }
   }, []);
@@ -50,7 +50,7 @@ function useFirebaseAuth() {
         );
       })
       .catch((error) => {
-        console.error('Logout failed with error: ', error);
+        console.error("Logout failed with error: ", error);
         throw error;
       });
   }, []);
@@ -77,7 +77,7 @@ function useFirebaseAuth() {
         });
       } else {
         console.error(
-          'No valid cookie present, the user needs to log in again.'
+          "No valid cookie present, the user needs to log in again."
         );
       }
     });

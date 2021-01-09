@@ -60,7 +60,6 @@ const DataManage = () => {
   const submit = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
     addData(form);
-
     setForm(empty);
   };
   const handleChange = (e: React.SyntheticEvent<EventTarget>): void => {

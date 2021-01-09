@@ -12,14 +12,20 @@ function App() {
   return (
     <Router>
       <div className="header space">
-        <Link to="./">
+        <Link className="textstyle" to="./">
           <h1>FireWatch</h1>
         </Link>
         {authContext.isLoggedIn ? authContext.user?.displayName : "Welcome!"}
 
-        <Link to="/dataVirtialization">Data Virtualization</Link>
-        <Link to="/dataManagement">Data Management</Link>
-        <Link to="/dataExport">Export Data</Link>
+        <Link className="textstyle" to="/dataVirtialization">
+          Data Virtualization
+        </Link>
+        <Link className="textstyle" to="/dataManagement">
+          Data Management
+        </Link>
+        <Link className="textstyle" to="/dataExport">
+          Data Export
+        </Link>
         {authContext.isLoggedIn && (
           <button color="inherit" onClick={authContext.logout}>
             Logout

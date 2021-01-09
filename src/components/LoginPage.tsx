@@ -5,11 +5,10 @@ import { useAuth } from "../firebase/AuthContext";
 export default function LoginPage() {
   const authContext = useAuth();
   const [username, setUserName] = useState<string>("");
-  const [validationError, setValidationError] = useState<boolean>(false);
 
   const handleSubmit = () => {
     if (!username) {
-      setValidationError(true);
+      alert("log in fail");
     } else if (authContext && authContext.login) {
       authContext.login(username);
     }
@@ -17,13 +16,12 @@ export default function LoginPage() {
 
   return (
     <div>
-      <p>Create a user or sign in to start playing!</p>
+      <p>Please enter a username log in the system</p>
       <div>
         <div>
           <input
             value={username}
             onChange={(e) => {
-              setValidationError(false);
               setUserName(e.target.value);
             }}
           />
