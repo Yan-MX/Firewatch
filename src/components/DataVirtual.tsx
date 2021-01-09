@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import DataTable from "./datavirtualComponents/DataTable";
 import Drawlinechart from "./datavirtualComponents/Drawlinechart";
 import Drawbarchart from "./datavirtualComponents/Drawbarchart";
-import { useAllDataFromFB } from "./firebase/DataService";
+import { useAllDataFromFB } from "../firebase/DataService";
 import {
   Line,
   CartesianGrid,
@@ -17,7 +17,7 @@ import {
   ComposedChart,
   Bar,
 } from "recharts";
-import { DataObject } from "../App";
+import { DataObject } from "../types";
 
 //define some types & interface
 export type MonthlyData = {

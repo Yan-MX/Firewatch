@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import { useEffect, useState } from "react";
-import { DataObject } from "../../App";
+import { DataObject } from "../types";
 
 const collectionName: string = "FireData";
 const countFileName: string = "CollectionRowCount";

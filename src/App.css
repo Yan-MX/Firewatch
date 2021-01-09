@@ -16,7 +16,7 @@ body {
 }
 .header {
   display: grid;
-  grid-template-columns: 55% 15% 15% 15%;
+  grid-template-columns: 20% 40% 10% 10% 10% 10%;
 }
 .space {
   margin: 2vw 10vw;
@@ -39,17 +39,13 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-.link-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  display: inline;
-  margin: 0;
-  padding: 0;
-}
 
-.link-button:hover,
-.link-button:focus {
+.textstyle:hover,
+.textstyle:focus {
+  font-weight: bold;
+}
+.textstyle {
+  color: green;
   text-decoration: none;
+  cursor: pointer;
 }

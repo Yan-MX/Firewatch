@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
+import "./firebase";
 
 describe("Test App component", () => {
   test("renders without crashing", () => {
@@ -21,7 +22,13 @@ describe("Test App component", () => {
 
   test("renders link element 3", () => {
     render(<App />);
-    const linkElement = screen.getByText(/Export Data/i);
+    const linkElement = screen.getByText(/Data Export/i);
+    expect(linkElement).toBeInTheDocument();
+  });
+
+  test("renders login element", () => {
+    render(<App />);
+    const linkElement = screen.getByText(/Login/i);
     expect(linkElement).toBeInTheDocument();
   });
 });
