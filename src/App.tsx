@@ -33,26 +33,28 @@ function App() {
         )}
       </div>
       <Switch>
-        <div className="space readable">
-          <AuthContext.Provider value={authContext}>
-            <Route path="/" exact component={LoginPage} />
-            <Route
-              path="/dataVirtialization"
-              authenticated={authContext.isLoggedIn}
-              component={DataVirtual}
-            />
-            <Route
-              path="/dataManagement"
-              authenticated={authContext.isLoggedIn}
-              component={DataManage}
-            />
-            <Route
-              path="/dataExport"
-              authenticated={authContext.isLoggedIn}
-              component={DataExport}
-            />
-          </AuthContext.Provider>
-        </div>
+        <>
+          <div className="space readable">
+            <AuthContext.Provider value={authContext}>
+              <Route path="/" exact component={LoginPage} />
+              <Route
+                path="/dataVirtialization"
+                authenticated={authContext.isLoggedIn}
+                component={DataVirtual}
+              />
+              <Route
+                path="/dataManagement"
+                authenticated={authContext.isLoggedIn}
+                component={DataManage}
+              />
+              <Route
+                path="/dataExport"
+                authenticated={authContext.isLoggedIn}
+                component={DataExport}
+              />
+            </AuthContext.Provider>
+          </div>
+        </>
       </Switch>
     </Router>
   );

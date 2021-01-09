@@ -5,7 +5,6 @@ interface Props {
 }
 const DataTable: React.FC<Props> = ({ data }) => {
   // a table with monthly average
-
   return (
     <table>
       <thead>
@@ -21,12 +20,12 @@ const DataTable: React.FC<Props> = ({ data }) => {
       {data.map((x) => (
         <tbody key={x.key}>
           <tr>
-            <td>{x.month}</td>
-            <td>{x.temp}</td>
-            <td>{x.RH}</td>
-            <td>{x.wind}</td>
-            <td>{x.rain}</td>
-            <td>{x.area}</td>
+            <td>{x === null ? "" : x.month}</td>
+            <td>{isNaN(x.temp) ? 0 : x.temp}</td>
+            <td>{isNaN(x.RH) ? 0 : x.RH}</td>
+            <td>{isNaN(x.wind) ? 0 : x.wind}</td>
+            <td>{isNaN(x.rain) ? 0 : x.rain}</td>
+            <td>{isNaN(x.area) ? 0 : x.area}</td>
           </tr>
         </tbody>
       ))}

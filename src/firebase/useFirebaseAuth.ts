@@ -32,7 +32,7 @@ function useFirebaseAuth() {
         })
       );
     } catch (error) {
-      console.error("Login error: ", error);
+      console.warn("Login error: ", error);
       throw error;
     }
   }, []);
@@ -50,7 +50,7 @@ function useFirebaseAuth() {
         );
       })
       .catch((error) => {
-        console.error("Logout failed with error: ", error);
+        console.warn("Logout failed with error: ", error);
         throw error;
       });
   }, []);
@@ -76,7 +76,7 @@ function useFirebaseAuth() {
           logout,
         });
       } else {
-        console.error(
+        console.warn(
           "No valid cookie present, the user needs to log in again."
         );
       }
